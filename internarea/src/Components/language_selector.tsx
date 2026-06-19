@@ -31,7 +31,7 @@ export default function LanguageSelector() {
       setOtpMessage("");
 
       // Send OTP
-      await fetch("http://localhost:5000/api/language/send-otp", {
+      await fetch("https://internshala-clone-63g9.onrender.com/api/language/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: user.email }),
@@ -54,7 +54,7 @@ export default function LanguageSelector() {
   setLoading(true);
 
   try {
-    const res = await fetch("http://localhost:5000/api/language/verify-otp", {
+    const res = await fetch("https://internshala-clone-63g9.onrender.com/api/language/verify-otp", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ otp, email: user.email }),

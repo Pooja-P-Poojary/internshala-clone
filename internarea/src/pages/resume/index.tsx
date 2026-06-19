@@ -299,7 +299,7 @@ const handleSendOtp = async () => {
   }
   setLoading(true);
   try {
-    const res = await fetch("http://localhost:5000/api/resume/send-otp", {
+    const res = await fetch("https://internshala-clone-63g9.onrender.com/api/resume/send-otp", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
@@ -322,7 +322,7 @@ const handleVerifyOtp = async () => {
   if (otp.length < 6) { setError("Please enter all 6 digits."); return; }
   setLoading(true);
   try {
-    const res = await fetch("http://localhost:5000/api/resume/verify-otp", {
+    const res = await fetch("https://internshala-clone-63g9.onrender.com/api/resume/verify-otp", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, otp }),
@@ -330,7 +330,7 @@ const handleVerifyOtp = async () => {
     const data = await res.json();
     if (!res.ok) { setError(data.message); return; }
 
-    const orderRes = await fetch("http://localhost:5000/api/resume/create-order", {
+    const orderRes = await fetch("https://internshala-clone-63g9.onrender.com/api/resume/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
@@ -353,7 +353,7 @@ const handleResendOtp = async () => {
   setOtpDigits(["", "", "", "", "", ""]);
   setLoading(true);
   try {
-    const res = await fetch("http://localhost:5000/api/resume/send-otp", {
+    const res = await fetch("https://internshala-clone-63g9.onrender.com/api/resume/send-otp", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
@@ -381,7 +381,7 @@ const handlePayment = () => {
     handler: async (response: any) => {
       setLoading(true);
       try {
-        const res = await fetch("http://localhost:5000/api/resume/verify-payment", {
+        const res = await fetch("https://internshala-clone-63g9.onrender.com/api/resume/verify-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

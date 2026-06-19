@@ -34,7 +34,7 @@ function AuthListener() {
           const deviceInfo = getDeviceInfo();
           
           // Save login history
-          const res = await fetch("http://localhost:5000/api/loginhistory/save", {
+          const res = await fetch("https://internshala-clone-63g9.onrender.com/api/loginhistory/save", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

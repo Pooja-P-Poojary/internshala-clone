@@ -52,7 +52,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
     setPendingLanguage("fre");
     setOtpRequired(true);
     if (email) {
-      await fetch("http://localhost:5000/api/language/send-otp", {
+      await fetch("https://internshala-clone-63g9.onrender.com/api/language/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -66,7 +66,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
 };
 
   const verifyOtpAndChange = async (otp: string, email: string) => {
-    const res = await fetch("http://localhost:5000/api/language/verify-otp", {
+    const res = await fetch("https://internshala-clone-63g9.onrender.com/api/language/verify-otp", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ otp, email }),

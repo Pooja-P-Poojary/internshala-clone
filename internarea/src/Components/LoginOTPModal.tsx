@@ -21,7 +21,7 @@ export default function LoginOTPModal({ email, onVerified }: Props) {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/loginhistory/verify-otp", {
+      const res = await fetch("https://internshala-clone-63g9.onrender.com/api/loginhistory/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),

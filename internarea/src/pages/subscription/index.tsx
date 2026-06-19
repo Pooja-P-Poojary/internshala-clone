@@ -46,7 +46,7 @@ export default function Subscription() {
     setMessage("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/payment/create-order", {
+      const res = await fetch("https://internshala-clone-63g9.onrender.com/api/payment/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ plan: plan.name }),
@@ -73,7 +73,7 @@ export default function Subscription() {
         },
         handler: async (response: any) => {
           try {
-            const verify = await fetch("http://localhost:5000/api/payment/verify-payment", {
+            const verify = await fetch("https://internshala-clone-63g9.onrender.com/api/payment/verify-payment", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -122,7 +122,7 @@ export default function Subscription() {
     if (!confirm) return;
 
     try {
-      const res = await fetch("http://localhost:5000/api/payment/unsubscribe", {
+      const res = await fetch("https://internshala-clone-63g9.onrender.com/api/payment/unsubscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user.uid }),

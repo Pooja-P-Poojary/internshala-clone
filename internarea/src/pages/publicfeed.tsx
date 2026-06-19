@@ -31,7 +31,7 @@ export default function PublicFeed() {
 
   const fetchPosts = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/post");
+      const res = await fetch("https://internshala-clone-63g9.onrender.com/api/post");
       const data = await res.json();
       if (data.success) {
         setPosts(data.posts);
@@ -58,7 +58,7 @@ export default function PublicFeed() {
         formData.append("media", mediaFile);
         formData.append("mediaType", mediaType);
       }
-      const res = await fetch("http://localhost:5000/api/post", {
+      const res = await fetch("https://internshala-clone-63g9.onrender.com/api/post", {
         method: "POST",
         body: formData,
       });
@@ -85,7 +85,7 @@ export default function PublicFeed() {
       return;
     }
     try {
-      const res = await fetch(`http://localhost:5000/api/post/like/${postId}`, {
+      const res = await fetch(`https://internshala-clone-63g9.onrender.com/api/post/like/${postId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user.uid }),
@@ -112,7 +112,7 @@ export default function PublicFeed() {
       return;
     }
     try {
-      const res = await fetch(`http://localhost:5000/api/post/comment/${postId}`, {
+      const res = await fetch(`https://internshala-clone-63g9.onrender.com/api/post/comment/${postId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -133,7 +133,7 @@ export default function PublicFeed() {
 
   const handleDelete = async (postId: string) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/post/${postId}`, {
+      const res = await fetch(`https://internshala-clone-63g9.onrender.com/api/post/${postId}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -157,7 +157,7 @@ export default function PublicFeed() {
       return;
     }
     try {
-      const res = await fetch("http://localhost:5000/api/post/addfriend", {
+      const res = await fetch("https://internshala-clone-63g9.onrender.com/api/post/addfriend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user.uid, friendId }),
@@ -181,7 +181,7 @@ export default function PublicFeed() {
   }
   setSearching(true);
   try {
-    const res = await fetch(`http://localhost:5000/api/post/search-users?query=${encodeURIComponent(query)}`);
+    const res = await fetch(`https://internshala-clone-63g9.onrender.com/api/post/search-users?query=${encodeURIComponent(query)}`);
     const data = await res.json();
     if (data.success) {
       setSearchResults(data.users);

@@ -30,7 +30,7 @@ export default function LoginHistory() {
   const fetchHistory = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/loginhistory/${user.uid}`
+        `https://internshala-clone-63g9.onrender.com/api/loginhistory/${user.uid}`
       );
       const data = await res.json();
       if (data.success) {

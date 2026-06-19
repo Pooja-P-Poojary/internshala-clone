@@ -45,7 +45,7 @@ export default function ResumeViewPage() {
     if (!id) return;
     const fetchResume = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/resume/${id}`);
+        const res = await fetch(`https://internshala-clone-63g9.onrender.com/api/resume/${id}`);
         const data = await res.json();
         if (!res.ok) { setError(data.message); return; }
         setResume(data.resume);
