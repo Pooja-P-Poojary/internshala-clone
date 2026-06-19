@@ -14,8 +14,9 @@ const generatePassword = (): string => {
 };
 
 const sendPasswordEmail = async (toEmail: string, newPassword: string) => {
-  // @ts-ignore
+  
   const transporter = nodemailer.createTransport({
+    // @ts-ignore
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
