@@ -19,6 +19,9 @@ export default function PublicFeed() {
   const [loading, setLoading] = useState(false);
   const [friendMessage, setFriendMessage] = useState("");
   const [postError, setPostError] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searching, setSearching] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -170,11 +173,110 @@ export default function PublicFeed() {
     }
   };
 
+  const handleSearchUsers = async (query: string) => {
+  setSearchQuery(query);
+  if (query.trim() === "") {
+    setSearchResults([]);
+    return;
+  }
+  setSearching(true);
+  try {
+    const res = await fetch(`http://localhost:5000/api/post/search-users?query=${encodeURIComponent(query)}`);
+    const data = await res.json();
+    if (data.success) {
+      setSearchResults(data.users);
+    }
+  } catch (error) {
+    console.log("Error searching users:", error);
+  }
+  setSearching(false);
+};
+
   if (!mounted) return null;
 
   return (
     <div style={{ maxWidth: "600px", margin: "0 auto", padding: "20px", color: "#1a1a1a" }}>
       <h1 style={{ color: "#0f3460", fontSize: "28px", marginBottom: "10px" }}>{t("publicFeed")}</h1>
+
+      {/* Search Users to Add Friend */}
+<div style={{ marginBottom: "20px", position: "relative" }}>
+  <input
+    type="text"
+    placeholder="🔍 Search users by name..."
+    value={searchQuery}
+    onChange={(e) => handleSearchUsers(e.target.value)}
+    style={{
+      width: "100%",
+      padding: "10px 14px",
+      border: "1px solid #0f3460",
+      borderRadius: "8px",
+      fontSize: "14px",
+      color: "#000",
+      boxSizing: "border-box",
+    }}
+  />
+
+  {searching && (
+    <p style={{ fontSize: "13px", color: "#555", marginTop: "6px" }}>Searching...</p>
+  )}
+
+  {searchResults.length > 0 && (
+    <div style={{
+      backgroundColor: "#fff",
+      border: "1px solid #ddd",
+      borderRadius: "8px",
+      marginTop: "6px",
+      boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+      overflow: "hidden",
+    }}>
+      {searchResults.map((u: any) => (
+        <div key={u.firebaseUid} style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "10px 14px",
+          borderBottom: "1px solid #eee",
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{
+              width: "36px", height: "36px", borderRadius: "50%",
+              backgroundColor: "#0f3460", color: "white",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontWeight: "bold", fontSize: "16px",
+            }}>
+              {u.name?.[0]?.toUpperCase() || "U"}
+            </div>
+            <p style={{ margin: 0, fontWeight: "bold", color: "#000", fontSize: "14px" }}>
+              {u.name || "User"}
+            </p>
+          </div>
+
+          {user && user.uid !== u.firebaseUid && (
+            <button
+              onClick={() => handleAddFriend(u.firebaseUid)}
+              style={{
+                padding: "6px 12px",
+                borderRadius: "5px",
+                cursor: "pointer",
+                border: "1px solid #0f3460",
+                backgroundColor: "#fff",
+                color: "#0f3460",
+                fontWeight: "bold",
+                fontSize: "12px",
+              }}
+            >
+              ➕ {t("addFriend")}
+            </button>
+          )}
+        </div>
+      ))}
+    </div>
+  )}
+
+  {searchQuery.trim() !== "" && !searching && searchResults.length === 0 && (
+    <p style={{ fontSize: "13px", color: "#555", marginTop: "6px" }}>No users found.</p>
+  )}
+</div>
 
       {friendMessage && (
         <p style={{

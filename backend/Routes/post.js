@@ -190,6 +190,25 @@ router.post("/addfriend", async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 });
+// GET search users by name
+router.get("/search-users", async (req, res) => {
+  try {
+    const { query } = req.query;
+
+    if (!query || query.trim() === "") {
+      return res.status(200).json({ success: true, users: [] });
+    }
+
+    const users = await User.find({
+      name: { $regex: query, $options: "i" },
+    }).limit(10).select("firebaseUid name email");
+
+    return res.status(200).json({ success: true, users });
+
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+});
 
 // DELETE post
 router.delete("/:id", async (req, res) => {
