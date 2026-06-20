@@ -6,7 +6,7 @@ import { ChevronDown, ChevronUp, Search } from "lucide-react";
 import { signInWithPopup, signOut } from "firebase/auth";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { selectuser } from "@/Feature/Userslice";
+import { selectuser } from "../Feature/Userslice";
 import LanguageSelector from "./language_selector";
 import { useLanguage } from "../Context/language_context";
 interface User {
@@ -56,6 +56,21 @@ const Navbar = () => {
               <button className="flex items-center space-x-1 text-gray-700 hover:text-blue-600">
                 <Link href={"/job"}>
                   <span>{t("jobs")}</span>
+                </Link>
+              </button>
+              <button className="flex items-center space-x-1 text-gray-700 hover:text-blue-600">
+                <Link href={"/publicfeed"}>
+                  <span>{t("publicFeed")}</span>
+                </Link>
+              </button>
+              <button className="flex items-center space-x-1 text-gray-700 hover:text-blue-600">
+                <Link href={"/subscription"}>
+                  <span>{t("choosePlan")}</span>
+                </Link>
+              </button>
+              <button className="flex items-center space-x-1 text-gray-700 hover:text-blue-600">
+                <Link href={"/resume"}>
+                  <span>{t("resumeBuilder")}</span>
                 </Link>
               </button>
               <div className="flex items-center bg-gray-100 rounded-full px-4 py-2">
