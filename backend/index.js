@@ -8,7 +8,10 @@ const { connect } = require("./db");
 const router = require("./Routes/index");
 const port = 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: "https://internshala-clone-blush.vercel.app",
+  credentials: true,
+}));
 app.use(bodyparser.json({ limit: "50mb" }));
 app.use(bodyparser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json());
