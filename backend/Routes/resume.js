@@ -53,7 +53,7 @@ router.post("/send-otp", async (req, res) => {
     await user.save();
 
     await transporter.sendMail({
-      from:    process.env.BREVO_SMTP_USER,
+      from:    "shruthip715@gmail.com",
       to:      email,
       subject: "InternHub — Resume Builder OTP",
       html: `

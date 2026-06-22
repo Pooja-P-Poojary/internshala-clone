@@ -24,7 +24,7 @@ const sendOTP = async (email, otp) => {
   });
 
   await transporter.sendMail({
-    from: process.env.BREVO_SMTP_USER,
+    from: "shruthip715@gmail.com",
     to: email,
     subject: "InternArea - Login OTP Verification",
     html: `

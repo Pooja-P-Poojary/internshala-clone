@@ -140,7 +140,7 @@ router.post("/create-order", async (req, res) => {
 });
 
     await transporter.sendMail({
-      from: process.env.BREVO_SMTP_USER,
+      from: "shruthip715@gmail.com",
       to: email,
       subject: "InternArea - Subscription Invoice",
       html: `
