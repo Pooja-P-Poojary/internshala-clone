@@ -13,6 +13,8 @@ const razorpay = new Razorpay({
 });
 
 // ── Nodemailer transporter (reusable) ─────────────────────────
+console.log("BREVO USER:", process.env.BREVO_SMTP_USER);
+console.log("BREVO KEY exists:", !!process.env.BREVO_SMTP_KEY);
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
   port: 587,
