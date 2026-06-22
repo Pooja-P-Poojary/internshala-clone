@@ -128,17 +128,19 @@ router.post("/create-order", async (req, res) => {
     });
     await payment.save();
 
-    // Send invoice email
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+  // Send invoice email
+  const transporter = nodemailer.createTransport({
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.BREVO_SMTP_USER,
+    pass: process.env.BREVO_SMTP_KEY,
+  },
+});
 
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: process.env.BREVO_SMTP_USER,
       to: email,
       subject: "InternArea - Subscription Invoice",
       html: `

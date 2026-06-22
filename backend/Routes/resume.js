@@ -14,26 +14,13 @@ const razorpay = new Razorpay({
 
 // ── Nodemailer transporter (reusable) ─────────────────────────
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "smtp-relay.brevo.com",
   port: 587,
   secure: false,
-  requireTLS: true,
-  family:4,
-  tls: {
-    rejectUnauthorized: false
-  },
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: process.env.BREVO_SMTP_USER,
+    pass: process.env.BREVO_SMTP_KEY,
   },
-});
-
-transporter.verify((error, success) => {
-  if (error) {
-    console.log("SMTP Verify Error:", error);
-  } else {
-    console.log("SMTP Server is ready");
-  }
 });
 
 // ── POST /resume/send-otp ─────────────────────────────────────
@@ -64,7 +51,7 @@ router.post("/send-otp", async (req, res) => {
     await user.save();
 
     await transporter.sendMail({
-      from:    process.env.EMAIL_USER,
+      from:    process.env.BREVO_SMTP_USER,
       to:      email,
       subject: "InternHub — Resume Builder OTP",
       html: `

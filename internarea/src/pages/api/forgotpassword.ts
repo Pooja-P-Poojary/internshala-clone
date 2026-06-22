@@ -17,30 +17,16 @@ const sendPasswordEmail = async (toEmail: string, newPassword: string) => {
   
   const transporter = nodemailer.createTransport({
     // @ts-ignore
-    host: "smtp.gmail.com",
+    host: "smtp-relay.brevo.com",
     port: 587,
     secure: false,
-    requireTLS: true,
-    family:4,
-    tls: {
-    rejectUnauthorized: false
-  },
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      user: process.env.BREVO_SMTP_USER,
+      pass: process.env.BREVO_SMTP_KEY,
     },
   });
-
-  transporter.verify((error, success) => {
-  if (error) {
-    console.log("SMTP Verify Error:", error);
-  } else {
-    console.log("SMTP Server is ready");
-  }
-});
-
   const info = await transporter.sendMail({
-    from: `"InternArea" <${process.env.EMAIL_USER}>`,
+    from: `"InternArea" <${process.env.BREVO_SMTP_USER}>`,
     to: toEmail,
     subject: "Your Password Has Been Reset - InternArea",
     html: `
