@@ -146,6 +146,7 @@ export default function LanguageSelector() {
                 borderRadius: "8px",
                 marginBottom: "15px",
                 boxSizing: "border-box",
+                color:"#0c0c0c"
               }}
             />
 
