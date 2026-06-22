@@ -15,8 +15,9 @@ const razorpay = new Razorpay({
 // ── Nodemailer transporter (reusable) ─────────────────────────
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
+  port: 587,
+  secure: false,
+  requireTLS: true,
   family:4,
   tls: {
     rejectUnauthorized: false
@@ -25,6 +26,14 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+});
+
+transporter.verify((error, success) => {
+  if (error) {
+    console.log("SMTP Verify Error:", error);
+  } else {
+    console.log("SMTP Server is ready");
+  }
 });
 
 // ── POST /resume/send-otp ─────────────────────────────────────

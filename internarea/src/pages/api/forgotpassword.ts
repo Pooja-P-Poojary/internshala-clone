@@ -18,8 +18,9 @@ const sendPasswordEmail = async (toEmail: string, newPassword: string) => {
   const transporter = nodemailer.createTransport({
     // @ts-ignore
     host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false,
+    requireTLS: true,
     family:4,
     tls: {
     rejectUnauthorized: false
@@ -29,6 +30,14 @@ const sendPasswordEmail = async (toEmail: string, newPassword: string) => {
       pass: process.env.EMAIL_PASS,
     },
   });
+
+  transporter.verify((error, success) => {
+  if (error) {
+    console.log("SMTP Verify Error:", error);
+  } else {
+    console.log("SMTP Server is ready");
+  }
+});
 
   const info = await transporter.sendMail({
     from: `"InternArea" <${process.env.EMAIL_USER}>`,
