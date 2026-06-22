@@ -39,7 +39,7 @@ router.post("/send-otp", async (req, res) => {
     });
 
     await transporter.sendMail({
-      from: process.env.BREVO_SMTP_USER,
+      from: "shruthip715@gmail.com",
       to: email,
       subject: "InternArea - French Language Verification OTP",
       html: `

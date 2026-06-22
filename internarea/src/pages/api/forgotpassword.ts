@@ -26,7 +26,7 @@ const sendPasswordEmail = async (toEmail: string, newPassword: string) => {
     },
   });
   const info = await transporter.sendMail({
-    from: `"InternArea" <${process.env.BREVO_SMTP_USER}>`,
+    from: "shruthip715@gmail.com",
     to: toEmail,
     subject: "Your Password Has Been Reset - InternArea",
     html: `
