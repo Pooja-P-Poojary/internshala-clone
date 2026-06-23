@@ -19,6 +19,10 @@ const sendEmail = async (to: string, subject: string, html: string) => {
     throw new Error(`Brevo API error: ${error}`);
   }
 
+  const result = await response.json();
+  console.log("BREVO RESPONSE:", JSON.stringify(result));
+  return result;
+
   return response.json();
 };
 
