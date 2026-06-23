@@ -1,5 +1,9 @@
-// backend/utils/sendEmail.js
 const sendEmail = async (to, subject, html) => {
+
+  console.log("Sending email to:", to);
+  console.log("BREVO API KEY EXISTS:", !!process.env.BREVO_API_KEY);
+
+
   const response = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
     headers: {
@@ -13,6 +17,11 @@ const sendEmail = async (to, subject, html) => {
       htmlContent: html,
     }),
   });
+
+  const responseText = await response.text();
+
+  console.log("BREVO STATUS:", response.status);
+  console.log("BREVO RESPONSE:", responseText);
 
   if (!response.ok) {
     const error = await response.text();
