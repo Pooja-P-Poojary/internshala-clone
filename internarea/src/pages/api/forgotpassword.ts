@@ -41,6 +41,7 @@ const sendPasswordEmail = async (toEmail: string, newPassword: string) => {
         <p style="color: #666; font-size: 13px;">If you did not request this reset, please contact support.</p>
       </div>`
   );
+};
 
 export default async function handler(
   req: NextApiRequest,
