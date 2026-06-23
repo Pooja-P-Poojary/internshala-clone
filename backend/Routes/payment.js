@@ -1,10 +1,11 @@
 const express = require("express");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
+//const nodemailer = require("nodemailer");
 const router = express.Router();
 const User = require("../Model/User");
 const Payment = require("../Model/Payment");
+const sendEmail = require("../utils/sendEmail");
 
 console.log("KEY_ID:", process.env.RAZORPAY_KEY_ID);
 console.log("SECRET:", process.env.RAZORPAY_SECRET);
@@ -129,7 +130,7 @@ router.post("/create-order", async (req, res) => {
     await payment.save();
 
   // Send invoice email
-  const transporter = nodemailer.createTransport({
+ /* const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
   port: 587,
   secure: false,
@@ -137,14 +138,12 @@ router.post("/create-order", async (req, res) => {
     user: process.env.BREVO_SMTP_USER,
     pass: process.env.BREVO_SMTP_KEY,
   },
-});
+});*/
 
-    await transporter.sendMail({
-      from: "shruthip715@gmail.com",
-      to: email,
-      subject: "InternArea - Subscription Invoice",
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+    await sendEmail(
+      email,
+      "InternArea - Subscription Invoice",
+      `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
           <h2 style="color: #0055cc; text-align: center;">InternArea Subscription Invoice</h2>
           <hr/>
           <p>Dear User,</p>
@@ -180,10 +179,10 @@ router.post("/create-order", async (req, res) => {
           <p style="text-align: center; color: #999; font-size: 12px;">
             InternArea © 2025 | All rights reserved
           </p>
-        </div>
-      `,
-    });
+        </div>`
+    );
 
+    
     return res.status(200).json({
       success: true,
       message: `${plan} plan activated! Invoice sent to email.`,

@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
-import nodemailer from "nodemailer";
+//import nodemailer from "nodemailer";
+import sendEmail from "../../lib/sendEmail";
 
 const UserSchema = new mongoose.Schema({}, { strict: false });
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
@@ -15,7 +16,7 @@ const generatePassword = (): string => {
 
 const sendPasswordEmail = async (toEmail: string, newPassword: string) => {
   
-  const transporter = nodemailer.createTransport({
+  /*const transporter = nodemailer.createTransport({
     // @ts-ignore
     host: "smtp-relay.brevo.com",
     port: 587,
@@ -24,13 +25,12 @@ const sendPasswordEmail = async (toEmail: string, newPassword: string) => {
       user: process.env.BREVO_SMTP_USER,
       pass: process.env.BREVO_SMTP_KEY,
     },
-  });
-  const info = await transporter.sendMail({
-    from: "shruthip715@gmail.com",
-    to: toEmail,
-    subject: "Your Password Has Been Reset - InternArea",
-    html: `
-      <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px;">
+  });*/
+
+  await sendEmail(
+    toEmail,
+    "Your Password Has Been Reset - InternArea",
+    `<div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 30px; border: 1px solid #ddd; border-radius: 8px;">
         <h2 style="color: #005aff;">InternArea - Password Reset</h2>
         <p>Your password has been successfully reset.</p>
         <p style="font-size: 18px;">Your new password is:</p>
@@ -39,12 +39,8 @@ const sendPasswordEmail = async (toEmail: string, newPassword: string) => {
         </div>
         <p style="color: red; margin-top: 15px;">⚠️ Please log in and change this password immediately.</p>
         <p style="color: #666; font-size: 13px;">If you did not request this reset, please contact support.</p>
-      </div>
-    `,
-  });
-  console.log("Email sent:", info.messageId);
-  console.log("Accepted:", info.accepted);
-};
+      </div>`
+  );
 
 export default async function handler(
   req: NextApiRequest,

@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const User = require("../Model/User");
 const Resume = require("../Model/Resume");
-const nodemailer = require("nodemailer");
+//const nodemailer = require("nodemailer");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
+const sendEmail = require("../utils/sendEmail");
 
 // ── Razorpay instance ──────────────────────────────────────────
 const razorpay = new Razorpay({
@@ -13,7 +14,7 @@ const razorpay = new Razorpay({
 });
 
 // ── Nodemailer transporter (reusable) ─────────────────────────
-console.log("BREVO USER:", process.env.BREVO_SMTP_USER);
+/*console.log("BREVO USER:", process.env.BREVO_SMTP_USER);
 console.log("BREVO KEY exists:", !!process.env.BREVO_SMTP_KEY);
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
@@ -23,7 +24,7 @@ const transporter = nodemailer.createTransport({
     user: process.env.BREVO_SMTP_USER,
     pass: process.env.BREVO_SMTP_KEY,
   },
-});
+});*/
 
 // ── POST /resume/send-otp ─────────────────────────────────────
 router.post("/send-otp", async (req, res) => {
@@ -52,18 +53,16 @@ router.post("/send-otp", async (req, res) => {
     };
     await user.save();
 
-    await transporter.sendMail({
-      from:    "shruthip715@gmail.com",
-      to:      email,
-      subject: "InternHub — Resume Builder OTP",
-      html: `
-        <h2>Your OTP for Resume Builder</h2>
-        <p>Use the code below to verify your email before payment.</p>
-        <h1 style="letter-spacing:8px;">${otp}</h1>
-        <p>Valid for <strong>10 minutes</strong>. Do not share this with anyone.</p>
-      `,
-    });
+    await sendEmail(
+      email,
+      "InternHub — Resume Builder OTP",
+      `<h2>Your OTP for Resume Builder</h2>
+       <p>Use the code below to verify your email before payment.</p>
+       <h1 style="letter-spacing:8px;">${otp}</h1>
+       <p>Valid for <strong>10 minutes</strong>. Do not share this with anyone.</p>`
+    );
 
+    
     res.json({ success: true, message: "OTP sent to email" });
   } catch (error) {
     console.error(error);

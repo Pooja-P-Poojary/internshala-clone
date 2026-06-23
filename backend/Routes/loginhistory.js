@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const LoginHistory = require("../Model/LoginHistory");
-const nodemailer = require("nodemailer");
+//const nodemailer = require("nodemailer");
+const sendEmail = require("../utils/sendEmail");
 
 // Store OTPs temporarily
 const otpStore = {};
@@ -12,8 +13,8 @@ const generateOTP = () => {
 };
 
 // Send OTP for Chrome login
-const sendOTP = async (email, otp) => {
-  const transporter = nodemailer.createTransport({
+/*const sendOTP = async (email, otp) => {
+ const transporter = nodemailer.createTransport({
     host: "smtp-relay.brevo.com",
     port: 587,
     secure: false,
@@ -25,9 +26,9 @@ const sendOTP = async (email, otp) => {
 
   await transporter.sendMail({
     from: "shruthip715@gmail.com",
-    to: email,
-    subject: "InternArea - Login OTP Verification",
-    html: `
+    email,
+    "InternArea - Login OTP Verification",
+    //html: `
       <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
         <h2 style="color: #0055cc; text-align: center;">🔐 Login Verification</h2>
         <p>A login attempt was made from <strong>Google Chrome</strong>.</p>
@@ -39,6 +40,23 @@ const sendOTP = async (email, otp) => {
       </div>
     `,
   });
+};*/
+
+//send otp
+const sendOTP = async (email, otp) => {
+  await sendEmail(
+    email,
+    "InternArea - Login OTP Verification",
+    `<div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+        <h2 style="color: #0055cc; text-align: center;">🔐 Login Verification</h2>
+        <p>A login attempt was made from <strong>Google Chrome</strong>.</p>
+        <p>Your OTP is:</p>
+        <h1 style="text-align: center; color: #0055cc; letter-spacing: 10px; font-size: 40px;">
+          ${otp}
+        </h1>
+        <p style="color: #999; font-size: 12px;">This OTP expires in 5 minutes.</p>
+      </div>`
+  );
 };
 
 // POST /api/loginhistory/save

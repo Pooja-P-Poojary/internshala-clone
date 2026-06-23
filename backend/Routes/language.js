@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const nodemailer = require("nodemailer");
+//const nodemailer = require("nodemailer");
+const sendEmail = require("../utils/sendEmail");
 
 // Store OTPs temporarily
 const otpStore = {};
@@ -28,7 +29,7 @@ router.post("/send-otp", async (req, res) => {
     };
 
     // Send email
-    const transporter = nodemailer.createTransport({
+    /*const transporter = nodemailer.createTransport({
       host: "smtp-relay.brevo.com",
       port: 587,
       secure: false,
@@ -36,14 +37,12 @@ router.post("/send-otp", async (req, res) => {
         user: process.env.BREVO_SMTP_USER,
         pass: process.env.BREVO_SMTP_KEY,
       },
-    });
+    });*/
 
-    await transporter.sendMail({
-      from: "shruthip715@gmail.com",
-      to: email,
-      subject: "InternArea - French Language Verification OTP",
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+    await sendEmail(
+      email,
+      "InternArea - French Language Verification OTP",
+      `<div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
           <h2 style="color: #0055cc; text-align: center;">🇫🇷 Language Verification</h2>
           <p>You are switching the website language to <strong>French</strong>.</p>
           <p>Your OTP is:</p>
@@ -51,10 +50,10 @@ router.post("/send-otp", async (req, res) => {
             ${otp}
           </h1>
           <p style="color: #999; font-size: 12px;">This OTP expires in 5 minutes.</p>
-        </div>
-      `,
-    });
+        </div>`
+    );
 
+    
     return res.status(200).json({
       success: true,
       message: "OTP sent successfully!",
