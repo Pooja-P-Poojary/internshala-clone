@@ -24,11 +24,10 @@ const sendEmail = async (to, subject, html) => {
   console.log("BREVO RESPONSE:", responseText);
 
   if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`Brevo API error: ${error}`);
+    throw new Error(`Brevo API error: ${responseText}`);
   }
 
-  return response.json();
+   return responseText;
 };
 
 module.exports = sendEmail;

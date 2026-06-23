@@ -4,7 +4,7 @@ const crypto = require("crypto");
 const router = express.Router();
 const User = require("../Model/User");
 const Payment = require("../Model/Payment");
-const sendEmail = require("../utils/sendEmail");
+const sendEmail = require("../Utils/sendEmail");
 
 console.log("KEY_ID:", process.env.RAZORPAY_KEY_ID);
 console.log("SECRET:", process.env.RAZORPAY_SECRET);

@@ -4,7 +4,7 @@ const User = require("../Model/User");
 const Resume = require("../Model/Resume");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
-const sendEmail = require("../utils/sendEmail");
+const sendEmail = require("../Utils/sendEmail");
 
 // ── Razorpay instance ──────────────────────────────────────────
 const razorpay = new Razorpay({

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const sendEmail = require("../utils/sendEmail");
+const sendEmail = require("../Utils/sendEmail");
 
 // Store OTPs temporarily
 const otpStore = {};
