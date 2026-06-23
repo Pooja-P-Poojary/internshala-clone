@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-//const nodemailer = require("nodemailer");
 const sendEmail = require("../utils/sendEmail");
 
 // Store OTPs temporarily
@@ -29,16 +28,6 @@ router.post("/send-otp", async (req, res) => {
     };
 
     // Send email
-    /*const transporter = nodemailer.createTransport({
-      host: "smtp-relay.brevo.com",
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.BREVO_SMTP_USER,
-        pass: process.env.BREVO_SMTP_KEY,
-      },
-    });*/
-
     await sendEmail(
       email,
       "InternArea - French Language Verification OTP",
@@ -53,7 +42,7 @@ router.post("/send-otp", async (req, res) => {
         </div>`
     );
 
-    
+
     return res.status(200).json({
       success: true,
       message: "OTP sent successfully!",

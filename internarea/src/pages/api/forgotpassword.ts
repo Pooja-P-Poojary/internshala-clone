@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
-//import nodemailer from "nodemailer";
 import sendEmail from "../../lib/sendEmail";
 
 const UserSchema = new mongoose.Schema({}, { strict: false });
@@ -15,17 +14,6 @@ const generatePassword = (): string => {
 };
 
 const sendPasswordEmail = async (toEmail: string, newPassword: string) => {
-  
-  /*const transporter = nodemailer.createTransport({
-    // @ts-ignore
-    host: "smtp-relay.brevo.com",
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.BREVO_SMTP_USER,
-      pass: process.env.BREVO_SMTP_KEY,
-    },
-  });*/
 
   await sendEmail(
     toEmail,

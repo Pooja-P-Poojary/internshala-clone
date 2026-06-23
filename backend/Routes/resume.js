@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const User = require("../Model/User");
 const Resume = require("../Model/Resume");
-//const nodemailer = require("nodemailer");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
@@ -12,19 +11,6 @@ const razorpay = new Razorpay({
   key_id:     process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_SECRET,
 });
-
-// ── Nodemailer transporter (reusable) ─────────────────────────
-/*console.log("BREVO USER:", process.env.BREVO_SMTP_USER);
-console.log("BREVO KEY exists:", !!process.env.BREVO_SMTP_KEY);
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.BREVO_SMTP_USER,
-    pass: process.env.BREVO_SMTP_KEY,
-  },
-});*/
 
 // ── POST /resume/send-otp ─────────────────────────────────────
 router.post("/send-otp", async (req, res) => {
@@ -62,7 +48,7 @@ router.post("/send-otp", async (req, res) => {
        <p>Valid for <strong>10 minutes</strong>. Do not share this with anyone.</p>`
     );
 
-    
+
     res.json({ success: true, message: "OTP sent to email" });
   } catch (error) {
     console.error(error);

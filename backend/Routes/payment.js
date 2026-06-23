@@ -1,7 +1,6 @@
 const express = require("express");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
-//const nodemailer = require("nodemailer");
 const router = express.Router();
 const User = require("../Model/User");
 const Payment = require("../Model/Payment");
@@ -129,17 +128,6 @@ router.post("/create-order", async (req, res) => {
     });
     await payment.save();
 
-  // Send invoice email
- /* const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.BREVO_SMTP_USER,
-    pass: process.env.BREVO_SMTP_KEY,
-  },
-});*/
-
     await sendEmail(
       email,
       "InternArea - Subscription Invoice",
@@ -182,7 +170,7 @@ router.post("/create-order", async (req, res) => {
         </div>`
     );
 
-    
+
     return res.status(200).json({
       success: true,
       message: `${plan} plan activated! Invoice sent to email.`,
