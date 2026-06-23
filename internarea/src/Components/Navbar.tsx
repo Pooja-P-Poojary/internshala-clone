@@ -96,6 +96,9 @@ const Navbar = () => {
                     {t("logout")}
                   </button>
                   <LanguageSelector />
+                  <Link href={"/forgot-password"} className="text-sm text-blue-600 hover:underline">
+                    Forgot Password?
+                  </Link>
                 </div>
               ) : (
                 <>
@@ -167,6 +170,9 @@ const Navbar = () => {
                   {t("logout")}
                 </button>
                 <LanguageSelector />
+                <Link href={"/forgot-password"} onClick={() => setMobileMenuOpen(false)} className="text-sm text-blue-600 hover:underline">
+                  Forgot Password?
+                </Link>
               </div>
             ) : (
               <div className="space-y-3 pt-3">
