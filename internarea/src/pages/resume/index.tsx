@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { selectuser } from "../../Feature/Userslice";
+import { useLanguage } from "../../Context/language_context";
 
 // ── Types ──────────────────────────────────────────────────────
 interface Education {
@@ -208,6 +209,7 @@ export default function ResumePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError]   = useState("");
   const [message, setMessage] = useState("");
+  const { t } = useLanguage();
 
   // Form state
   const [form, setForm] = useState<ResumeForm>({
@@ -430,7 +432,7 @@ if (!(window as any).Razorpay) {
       <div style={s.page}>
         {/* ── Page title ── */}
         <h1 style={{ ...s.heading, fontSize: "26px", marginBottom: "4px" }}>
-          Resume Builder
+          {t("Resume Builder")}
         </h1>
         <p style={{ color: "#555", marginBottom: "24px", fontSize: "14px" }}>
           Premium feature · ₹50 per resume · Auto-attached to your profile
@@ -464,44 +466,44 @@ if (!(window as any).Razorpay) {
           <>
             {/* Personal info */}
             <div style={s.card}>
-              <h2 style={s.heading}>Personal Information</h2>
+              <h2 style={s.heading}>{t("personalInformation")}</h2>
               <p style={{ color: "#555", fontSize: "13px", marginBottom: "20px" }}>
                 These details will appear on your resume.
               </p>
 
-              <label style={s.label}>Full Name *</label>
+              <label style={s.label}>{t("fullName")} *</label>
               <input style={s.input} placeholder="Priya Sharma"
                 value={form.fullName} onChange={(e) => setField("fullName", e.target.value)} />
 
               <div style={s.row}>
                 <div>
-                  <label style={s.label}>Phone *</label>
+                  <label style={s.label}>{t("phone")} *</label>
                   <input style={s.input} placeholder="+91 98765 43210"
                     value={form.phone} onChange={(e) => setField("phone", e.target.value)} />
                 </div>
                 <div>
-                  <label style={s.label}>Location</label>
+                  <label style={s.label}>{t("Location")}</label>
                   <input style={s.input} placeholder="Mumbai, Maharashtra"
                     value={form.location} onChange={(e) => setField("location", e.target.value)} />
                 </div>
               </div>
 
-              <label style={s.label}>LinkedIn URL</label>
+              <label style={s.label}>{t("LinkedInURL")}</label>
               <input style={s.input} placeholder="linkedin.com/in/priya-sharma"
                 value={form.linkedin} onChange={(e) => setField("linkedin", e.target.value)} />
 
-              <label style={s.label}>Profile Photo URL</label>
+              <label style={s.label}>{t("profilePhotoURL")}</label>
               <input style={s.input} placeholder="https://..."
                 value={form.photoUrl} onChange={(e) => setField("photoUrl", e.target.value)} />
 
-              <label style={s.label}>Professional Summary *</label>
+              <label style={s.label}>{t("professionalSummary")} *</label>
               <textarea style={s.textarea} placeholder="Brief overview of your profile and career goals..."
                 value={form.summary} onChange={(e) => setField("summary", e.target.value)} />
             </div>
 
             {/* Education */}
             <div style={s.card}>
-              <h2 style={s.heading}>Education</h2>
+              <h2 style={s.heading}>{t("education")}</h2>
               {form.education.map((edu, i) => (
                 <div key={i} style={s.dynamicItem}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
@@ -517,22 +519,22 @@ if (!(window as any).Razorpay) {
                   </div>
                   <div style={s.row}>
                     <div>
-                      <label style={s.label}>Degree / Course</label>
+                      <label style={s.label}>{t("Degree / Course")}</label>
                       <input style={s.input} placeholder="B.Tech Computer Science"
                         value={edu.degree} onChange={(e) => updateEdu(i, "degree", e.target.value)} />
                     </div>
                     <div>
-                      <label style={s.label}>Institution</label>
+                      <label style={s.label}>{t("Institution")}</label>
                       <input style={s.input} placeholder="IIT Bombay"
                         value={edu.institution} onChange={(e) => updateEdu(i, "institution", e.target.value)} />
                     </div>
                     <div>
-                      <label style={s.label}>Year</label>
+                      <label style={s.label}>{t("Year")}</label>
                       <input style={s.input} placeholder="2021–2025"
                         value={edu.year} onChange={(e) => updateEdu(i, "year", e.target.value)} />
                     </div>
                     <div>
-                      <label style={s.label}>Grade / CGPA</label>
+                      <label style={s.label}>{t("Grade / CGPA")}</label>
                       <input style={s.input} placeholder="8.5 / 10"
                         value={edu.grade} onChange={(e) => updateEdu(i, "grade", e.target.value)} />
                     </div>
@@ -547,7 +549,7 @@ if (!(window as any).Razorpay) {
 
             {/* Experience */}
             <div style={s.card}>
-              <h2 style={s.heading}>Experience</h2>
+              <h2 style={s.heading}>{t("Experience")}</h2>
               {form.experience.map((exp, i) => (
                 <div key={i} style={s.dynamicItem}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
@@ -563,27 +565,27 @@ if (!(window as any).Razorpay) {
                   </div>
                   <div style={s.row}>
                     <div>
-                      <label style={s.label}>Job Title / Role</label>
+                      <label style={s.label}>{t("Job Title / Role")}</label>
                       <input style={s.input} placeholder="Frontend Intern"
                         value={exp.title} onChange={(e) => updateExp(i, "title", e.target.value)} />
                     </div>
                     <div>
-                      <label style={s.label}>Company</label>
+                      <label style={s.label}>{t("Company")}</label>
                       <input style={s.input} placeholder="Google"
                         value={exp.company} onChange={(e) => updateExp(i, "company", e.target.value)} />
                     </div>
                     <div>
-                      <label style={s.label}>Duration</label>
+                      <label style={s.label}>{t("Duration")}</label>
                       <input style={s.input} placeholder="Jun 2024 – Aug 2024"
                         value={exp.duration} onChange={(e) => updateExp(i, "duration", e.target.value)} />
                     </div>
                     <div>
-                      <label style={s.label}>Location</label>
+                      <label style={s.label}>{t("Location")}</label>
                       <input style={s.input} placeholder="Bengaluru"
                         value={exp.location} onChange={(e) => updateExp(i, "location", e.target.value)} />
                     </div>
                   </div>
-                  <label style={s.label}>Description</label>
+                  <label style={s.label}>{t("Description")}</label>
                   <textarea style={s.textarea} placeholder="Key responsibilities and achievements..."
                     value={exp.description} onChange={(e) => updateExp(i, "description", e.target.value)} />
                 </div>
@@ -596,7 +598,7 @@ if (!(window as any).Razorpay) {
 
             {/* Skills */}
             <div style={s.card}>
-              <h2 style={s.heading}>Skills & Certifications</h2>
+              <h2 style={s.heading}>{t("Skills & Certifications")}</h2>
 
               <label style={s.label}>Skills *</label>
               <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
@@ -628,7 +630,7 @@ if (!(window as any).Razorpay) {
                 ))}
               </div>
 
-              <label style={s.label}>Certifications & Achievements</label>
+              <label style={s.label}>{t("Certifications & Achievements")}</label>
               <textarea style={s.textarea}
                 placeholder="Google Data Analytics Certificate, Hackathon Winner..."
                 value={form.certifications}
@@ -645,7 +647,7 @@ if (!(window as any).Razorpay) {
         {/* ════════════ STEP 2 — OTP ════════════ */}
         {step === "otp" && (
           <div style={s.card}>
-            <h2 style={s.heading}>Email Verification</h2>
+            <h2 style={s.heading}>{t("Email Verification")}</h2>
             <p style={{ color: "#555", fontSize: "14px", marginBottom: "16px" }}>
               A 6-digit OTP has been sent to <strong>{email}</strong>
             </p>
@@ -707,7 +709,7 @@ if (!(window as any).Razorpay) {
         {/* ════════════ STEP 3 — PAYMENT ════════════ */}
         {step === "payment" && (
           <div style={s.card}>
-            <h2 style={s.heading}>Complete Payment</h2>
+            <h2 style={s.heading}>{t("Complete Payment")}</h2>
             <p style={{ color: "#555", fontSize: "14px", marginBottom: "20px" }}>
               One-time fee to generate and attach your resume to your profile.
             </p>
